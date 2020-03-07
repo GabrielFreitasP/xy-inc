@@ -21,9 +21,9 @@
     "paths": {
       "@config/*": ["config/*"],
       "@services/*": ["services/*"],
-      "@schemas/*": ["schemas/*"],
-      "@utils/*": ["utils/*"]
+      "@schemas/*": ["schemas/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "__tests__"]
 }
