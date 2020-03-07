@@ -19,7 +19,10 @@
       "node_modules/@types"
     ],
     "paths": {
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@services/*": ["services/*"],
+      "@schemas/*": ["schemas/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src"]
