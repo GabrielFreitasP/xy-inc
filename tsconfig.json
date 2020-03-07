@@ -21,7 +21,8 @@
     "paths": {
       "@config/*": ["config/*"],
       "@services/*": ["services/*"],
-      "@schemas/*": ["schemas/*"]
+      "@schemas/*": ["schemas/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src"],
