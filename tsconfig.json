@@ -17,7 +17,10 @@
     "noImplicitAny": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "paths": {
+      "@config/*": ["config/*"]
+    }
   },
   "include": ["src"]
 }
