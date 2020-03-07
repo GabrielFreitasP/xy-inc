@@ -11,5 +11,5 @@ Register and list interest points
 - Use Express;
 
 **Business rules**
-- On register, can't have the same name;
-- On listing by proximity, list only those that are between distance entered;
+- On register, the coordinates can't be negative;
+- On listing by proximity, list only those that are within the shortest or equal distance at the maximum distance from the reference point;
