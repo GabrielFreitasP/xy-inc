@@ -25,11 +25,11 @@ describe('Create Interest Point', () => {
       coordinateY: 12 
     };
 
-    await CreateInterestPointService.run(interestPoint)
+    await CreateInterestPointService.run(interestPoint);
 
-    const list = await InterestPoint.find({});
+    const interestPointsArray = await InterestPoint.find({});
 
-    expect(list).toEqual(
+    expect(interestPointsArray).toEqual(
       expect.arrayContaining([
         expect.objectContaining(interestPoint)
       ])
