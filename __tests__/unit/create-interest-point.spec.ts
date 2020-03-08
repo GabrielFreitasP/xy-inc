@@ -9,20 +9,20 @@ describe('Create Interest Point', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });
-  
+
   afterAll(async () => {
     await MongoMock.disconnect();
   });
-  
+
   beforeEach(async () => {
     await InterestPoint.deleteMany({});
   });
-  
+
   it('should be able to create new interest point', async () => {
-    const interestPoint: InterestPointData = { 
-      name: 'Lanchonete', 
-      coordinateX: 27, 
-      coordinateY: 12 
+    const interestPoint: InterestPointData = {
+      name: 'Lanchonete',
+      coordinateX: 27,
+      coordinateY: 12
     };
 
     await CreateInterestPointService.run(interestPoint);

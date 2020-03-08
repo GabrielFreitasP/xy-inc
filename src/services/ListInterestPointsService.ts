@@ -1,4 +1,4 @@
-import InterestPoint from '../schemas/InterestPoint';
+import InterestPoint from '@schemas/InterestPoint';
 
 class ListInterestPointsService {
   async run(): Promise<any[]> {
