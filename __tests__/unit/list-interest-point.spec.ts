@@ -1,10 +1,10 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListAllInterestPointService from '../../src/services/ListInterestPointsService';
+import ListInterestPointsService from '../../src/services/ListInterestPointsService';
 
 import InterestPoint from '../../src/schemas/InterestPoint';
 
-describe('List All Interest Point', () => {
+describe('List Interest Points', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });
@@ -36,7 +36,7 @@ describe('List All Interest Point', () => {
       coordinateY: 12
     });
 
-    const arrayFromService = await ListAllInterestPointService.run();
+    const arrayFromService = await ListInterestPointsService.run();
 
     const arrayFromDB = await InterestPoint.find({}).lean();
 
