@@ -47,4 +47,44 @@ routes.get('/pointsOfInterest', async (req, res) => {
   });
 });
 
+routes.get('/pointsOfInterest/byProximity', async (req, res) => {
+  try {
+    if (!req.query) {
+      return res.status(400).send({
+        success: false,
+        message: 'No URL params (distance, coordinateX, coordinateY)'
+      });
+    }
+  
+    const { distance, coordinateX, coordinateY } = req.query;
+    if (!isValidNumber(distance) || !isValidNumber(coordinateY) || !isValidNumber(coordinateX)) {
+      return res.status(400).send({ 
+        success: false, 
+        message: 'Invalid URL params' 
+      });
+    }
+  
+    if (distance < 0 || coordinateX < 0 || coordinateY < 0) {
+      return res.status(400).send({ 
+        success: false, 
+        message: 'Negative values are\'t accepted' 
+      });
+    }
+    
+    const poisArray = await ListPOIsByProximityService.run({ distance, coordinateX, coordinateY })
+  
+    return res.status(200).send({ 
+      success: true, 
+      data: poisArray
+    }); 
+  } 
+  catch (err) {
+    console.error(err);
+    res.status(500).send({ 
+      success: false, 
+      message: 'Internal server error' 
+    });
+  }
+});
+
 export default routes;
