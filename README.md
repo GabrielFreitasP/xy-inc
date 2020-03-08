@@ -1,10 +1,10 @@
-Register and list interest points
+Register and list points of interest (POIs)
 --------
 
 **Functional resources**
-- Register interest points;
-- List all interest points registereds;
-- List interest points by proximity;
+- Register POI;
+- List all POIs registereds;
+- List POIs by proximity;
 
 **Non-functional resources**
 - Using MongoDB;

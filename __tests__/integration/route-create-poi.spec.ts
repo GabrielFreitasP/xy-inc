@@ -25,7 +25,7 @@ describe('Route to Create Point of Interest', () => {
     };
 
     const response = await request(app)
-      .post('/interestPoints')
+      .post('/pointsOfInterest')
       .send(interestPoint);
 
     expect(response.status).toBe(201);
@@ -38,7 +38,7 @@ describe('Route to Create Point of Interest', () => {
     };
 
     const response = await request(app)
-      .post('/interestPoints')
+      .post('/pointsOfInterest')
       .send(interestPoint);
 
     expect(response.status).toBe(400);

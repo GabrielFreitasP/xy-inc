@@ -19,7 +19,7 @@ describe('Route to List Points of Interest', () => {
   
   it('should return status ok', async () => {
     const response = await request(app)
-      .get('/interestPoints');
+      .get('/pointsOfInterest');
 
     expect(response.status).toBe(200);
   });
