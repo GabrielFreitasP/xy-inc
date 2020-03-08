@@ -5,6 +5,9 @@ import CreatePOIService from '@services/CreatePOIService';
 import ListPOIsService from '@services/ListPOIsService';
 import ListPOIsByProximityService from '@services/ListPOIsByProximityService';
 
+import POIData from '@services/structures/PointOfInterestData';
+import DistanceData from '@services/structures/DistanceData';
+
 const routes = Router();
 
 routes.post('/pointsOfInterest', async (req, res) => {
@@ -40,7 +43,6 @@ routes.post('/pointsOfInterest', async (req, res) => {
   }
   catch (err) {
     console.error(err);
-    
     res.status(500).send({
       success: false,
       message: 'Internal server error'
@@ -59,7 +61,6 @@ routes.get('/pointsOfInterest', async (req, res) => {
   }
   catch (err) {
     console.error(err);
-    
     res.status(500).send({
       success: false,
       message: 'Internal server error'
@@ -76,7 +77,11 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
       });
     }
 
-    const { distance, coordinateX, coordinateY } = req.query;
+    const { distance, coordinateX, coordinateY } = {
+      distance: parseInt(req.query.distance),
+      coordinateX: parseInt(req.query.coordinateX),
+      coordinateY: parseInt(req.query.coordinateY)
+    } as DistanceData;
     if (!isValidNumber(distance) || !isValidNumber(coordinateY) || !isValidNumber(coordinateX)) {
       return res.status(400).send({
         success: false,
@@ -91,7 +96,7 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
       });
     }
 
-    const poisArray = await ListPOIsByProximityService.run({ distance, coordinateX, coordinateY })
+    const poisArray = await ListPOIsByProximityService.run({ distance, coordinateX, coordinateY }) as POIData[]
 
     return res.status(200).send({
       success: true,
@@ -100,7 +105,6 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
   }
   catch (err) {
     console.error(err);
-    
     res.status(500).send({
       success: false,
       message: 'Internal server error'
