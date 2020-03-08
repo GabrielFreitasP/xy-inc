@@ -1,11 +1,11 @@
 import MongoMock from '../utils/MongoMock';
-import InterestPointData from '../../src/services/structures/InterestPointData';
+import InterestPointData from '../../src/services/structures/PointOfInterestData';
 
-import CreateInterestPointService from '../../src/services/CreateInterestPointService';
+import CreateInterestPointService from '../../src/services/CreatePOIService';
 
-import InterestPoint from '../../src/schemas/InterestPoint';
+import InterestPoint from '../../src/schemas/PointOfInterest';
 
-describe('Create Interest Point', () => {
+describe('Create Point of Interest', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });
@@ -18,7 +18,7 @@ describe('Create Interest Point', () => {
     await InterestPoint.deleteMany({});
   });
 
-  it('should be able to create new interest point', async () => {
+  it('should be able to create new point of interest', async () => {
     const interestPoint: InterestPointData = {
       name: 'Lanchonete',
       coordinateX: 27,

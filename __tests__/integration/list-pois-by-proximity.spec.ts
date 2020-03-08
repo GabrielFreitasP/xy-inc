@@ -1,10 +1,10 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListInterestPointsByProximityService from '../../src/services/ListInterestPointsByProximityService';
+import ListInterestPointsByProximityService from '../../src/services/ListPOIsByProximityService';
 
-import InterestPoint from '../../src/schemas/InterestPoint';
+import InterestPoint from '../../src/schemas/PointOfInterest';
 
-describe('List Interest Points By Proximity', () => {
+describe('List Points of Interest by Proximity', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });

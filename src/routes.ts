@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import CreateInterestPointService from '@services/CreateInterestPointService';
-import ListInterestPointsService from '@services/ListInterestPointsService';
+import CreatePOIService from '@services/CreatePOIService';
+import ListPOIsService from '@services/ListPOIsService';
 
 const routes = Router();
 
-routes.post('/interestPoints', async (req, res) => {
+routes.post('/pointsOfInterest', async (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       success: false,
@@ -28,21 +28,20 @@ routes.post('/interestPoints', async (req, res) => {
     });
   }
   
-  const interestPoint =
-    await CreateInterestPointService.run({ name, coordinateX, coordinateY });
+  const poi = await CreatePOIService.run({ name, coordinateX, coordinateY });
 
   return res.status(201).send({
     success: true,
-    data: interestPoint
+    data: poi
   });
 });
 
-routes.get('/interestPoints', async (req, res) => {
-  const interestPointsArray = await ListInterestPointsService.run();
+routes.get('/pointsOfInterest', async (req, res) => {
+  const poisArray = await ListPOIsService.run();
 
   return res.status(200).send({
     success: true,
-    data: interestPointsArray
+    data: poisArray
   });
 });
 

@@ -1,10 +1,10 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListInterestPointsService from '../../src/services/ListInterestPointsService';
+import ListInterestPointsService from '../../src/services/ListPOIsService';
 
-import InterestPoint from '../../src/schemas/InterestPoint';
+import InterestPoint from '../../src/schemas/PointOfInterest';
 
-describe('List Interest Points', () => {
+describe('List Points of Interest', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });
@@ -17,7 +17,7 @@ describe('List Interest Points', () => {
     await InterestPoint.deleteMany({});
   });
 
-  it('should be able list all interest point', async () => {
+  it('should be able list all points of interest', async () => {
     await InterestPoint.create({
       name: 'Lanchonete',
       coordinateX: 27,

@@ -2,13 +2,13 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 const validateInteger = require('mongoose-integer');
 
-type InterestPoint = Document & {
+type PointOfInterest = Document & {
   name: string;
   coordinateX: number;
   coordinateY: number;
 };
 
-const InterestPointSchema = new Schema(
+const PointOfInterestSchema = new Schema(
   {
     name: {
       type: String,
@@ -32,6 +32,6 @@ const InterestPointSchema = new Schema(
     timestamps: true
   }
 );
-InterestPointSchema.plugin(validateInteger);
+PointOfInterestSchema.plugin(validateInteger);
 
-export default mongoose.model<InterestPoint>('InterestPoint', InterestPointSchema);
+export default mongoose.model<PointOfInterest>('PointOfInterest', PointOfInterestSchema);

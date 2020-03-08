@@ -2,9 +2,9 @@ import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
 
 import app from '../../src/app';
-import InterestPoint from '../../src/schemas/InterestPoint';
+import InterestPoint from '../../src/schemas/PointOfInterest';
 
-describe('Interest Point Listing Route', () => {
+describe('Route to List Points of Interest', () => {
   beforeAll(async () => {
     await MongoMock.connect();
   });
