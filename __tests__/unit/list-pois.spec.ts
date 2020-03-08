@@ -1,6 +1,6 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListInterestPointsService from '../../src/services/ListPOIsService';
+import ListPOIsService from '../../src/services/ListPOIsService';
 
 import InterestPoint from '../../src/schemas/PointOfInterest';
 
@@ -36,7 +36,7 @@ describe('List Points of Interest', () => {
       coordinateY: 12
     });
 
-    const arrayFromService = await ListInterestPointsService.run();
+    const arrayFromService = await ListPOIsService.run();
 
     const arrayFromDB = await InterestPoint.find({}).lean();
 

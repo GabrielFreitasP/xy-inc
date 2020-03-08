@@ -2,7 +2,7 @@ import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
 
 import app from '../../src/app';
-import InterestPoint from '../../src/schemas/PointOfInterest';
+import PointOfInterest from '../../src/schemas/PointOfInterest';
 
 describe('Route to List Points of Interest', () => {
   beforeAll(async () => {
@@ -14,7 +14,7 @@ describe('Route to List Points of Interest', () => {
   });
   
   beforeEach(async () => {
-    await InterestPoint.deleteMany({});
+    await PointOfInterest.deleteMany({});
   });
   
   it('should return status ok', async () => {
