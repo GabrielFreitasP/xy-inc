@@ -1,8 +1,8 @@
 import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
-
 import app from '../../src/app';
-import PointOfInterest from '../../src/schemas/PointOfInterest';
+
+import POI from '../../src/schemas/PointOfInterest';
 
 describe('Route to Create Point of Interest', () => {
   beforeAll(async () => {
@@ -14,10 +14,10 @@ describe('Route to Create Point of Interest', () => {
   });
 
   beforeEach(async () => {
-    await PointOfInterest.deleteMany({});
+    await POI.deleteMany({});
   });
 
-  it('should return status created', async () => {
+  it('should return status 201 with correct params', async () => {
     const poi = {
       name: 'Lanchonete',
       coordinateX: 27,
@@ -29,9 +29,23 @@ describe('Route to Create Point of Interest', () => {
       .send(poi);
 
     expect(response.status).toBe(201);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toEqual(
+      expect.objectContaining(poi)
+    );
   });
 
-  it('should return status bad request', async () => {
+  it('should return status 400 without body', async () => {
+    const response = await request(app)
+      .post('/pointsOfInterest')
+      .send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('No body content');
+  });
+
+  it('should return status 400 missing field on body', async () => {
     const poi = {
       name: 'Lanchonete',
       coordinateX: 27
@@ -42,19 +56,39 @@ describe('Route to Create Point of Interest', () => {
       .send(poi);
 
     expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Invalid body content');
   });
 
-  it('should accept the number zero', async () => {
+  it('should return status 400 with params with object', async () => {
     const poi = {
-      name: 'Lanchonete',
-      coordinateX: 0,
-      coordinateY: 0
+      name: { value: 'Lanchonete' },
+      coordinateX: 27,
+      coordinateY: -12
     };
 
     const response = await request(app)
       .post('/pointsOfInterest')
       .send(poi);
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual("Invalid body content");
+  });
+
+  it('should return status 400 with params with negative values', async () => {
+    const poi = {
+      name: 'Lanchonete',
+      coordinateX: 27,
+      coordinateY: -12
+    };
+
+    const response = await request(app)
+      .post('/pointsOfInterest')
+      .send(poi);
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual("Negative values aren't accepted");
   });
 });
