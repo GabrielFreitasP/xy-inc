@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isValidNumber } from '@utils/validations'
+import { isValidString, isValidNumber } from '@utils/validations'
 
 import CreatePOIService from '@services/CreatePOIService';
 import ListPOIsService from '@services/ListPOIsService';
@@ -20,7 +20,7 @@ routes.post('/pointsOfInterest', async (req, res) => {
     }
 
     const { name, coordinateX, coordinateY } = req.body;
-    if (!name || !isValidNumber(coordinateX) || !isValidNumber(coordinateY)) {
+    if (!isValidString(name) || !isValidNumber(coordinateX) || !isValidNumber(coordinateY)) {
       return res.status(400).send({
         success: false,
         message: 'Invalid body content'
