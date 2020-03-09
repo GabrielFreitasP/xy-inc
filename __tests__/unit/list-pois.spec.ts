@@ -2,7 +2,9 @@ import MongoMock from '../utils/MongoMock';
 
 import ListPOIsService from '../../src/services/ListPOIsService';
 
-import InterestPoint from '../../src/schemas/PointOfInterest';
+import POI from '../../src/schemas/PointOfInterest';
+
+import { poisArrayMock } from '../utils/arrays-mock';
 
 describe('List Points of Interest', () => {
   beforeAll(async () => {
@@ -14,32 +16,26 @@ describe('List Points of Interest', () => {
   });
 
   beforeEach(async () => {
-    await InterestPoint.deleteMany({});
+    await POI.deleteMany({});
   });
 
   it('should be able list all points of interest', async () => {
-    await InterestPoint.create({
-      name: 'Lanchonete',
-      coordinateX: 27,
-      coordinateY: 12
-    });
+    await POI.create(poisArrayMock);
 
-    await InterestPoint.create({
-      name: 'Posto',
-      coordinateX: 31,
-      coordinateY: 18
-    });
+    const poisArray = await ListPOIsService.run();
 
-    await InterestPoint.create({
-      name: 'Joalheria',
-      coordinateX: 15,
-      coordinateY: 12
-    });
-
-    const arrayFromService = await ListPOIsService.run();
-
-    const arrayFromDB = await InterestPoint.find({}).lean();
-
-    expect(arrayFromService).toEqual(arrayFromDB);
+    expect(poisArray).toBeInstanceOf(Array);
+    expect(poisArray.length).toBe(7);
+    expect(poisArray).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(poisArrayMock[0]),
+        expect.objectContaining(poisArrayMock[1]),
+        expect.objectContaining(poisArrayMock[2]),
+        expect.objectContaining(poisArrayMock[3]),
+        expect.objectContaining(poisArrayMock[4]),
+        expect.objectContaining(poisArrayMock[5]),
+        expect.objectContaining(poisArrayMock[6])
+      ])
+    );
   });
 });
