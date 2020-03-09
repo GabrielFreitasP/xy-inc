@@ -12,7 +12,7 @@ const routes = Router();
 
 routes.post('/pointsOfInterest', async (req, res) => {
   try {
-    if (!req.body) {
+    if (Object.keys(req.body).length === 0) {
       return res.status(400).send({
         success: false,
         message: 'No body content'
@@ -68,10 +68,10 @@ routes.get('/pointsOfInterest', async (req, res) => {
 
 routes.get('/pointsOfInterest/byProximity', async (req, res) => {
   try {
-    if (!req.query) {
+    if (Object.keys(req.query).length === 0) {
       return res.status(400).send({
         success: false,
-        message: 'No URL params'
+        message: 'No query content'
       });
     }
 
@@ -80,10 +80,10 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
       coordinateX: parseInt(req.query.coordinateX),
       coordinateY: parseInt(req.query.coordinateY)
     };
-    if (!isValidNumber(distance) || !isValidNumber(coordinateY) || !isValidNumber(coordinateX)) {
+    if (!isValidNumber(distance) || !isValidNumber(coordinateX) || !isValidNumber(coordinateY)) {
       return res.status(400).send({
         success: false,
-        message: 'Invalid URL params'
+        message: 'Invalid query content'
       });
     }
 
