@@ -30,7 +30,7 @@ routes.post('/pointsOfInterest', async (req, res) => {
     if (coordinateX < 0 || coordinateY < 0) {
       return res.status(400).send({
         success: false,
-        message: 'Negative values are\'t accepted'
+        message: "Negative values aren't accepted"
       });
     }
 
@@ -40,8 +40,7 @@ routes.post('/pointsOfInterest', async (req, res) => {
       success: true,
       data: poi
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send({
       success: false,
@@ -58,8 +57,7 @@ routes.get('/pointsOfInterest', async (req, res) => {
       success: true,
       data: poisArray
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send({
       success: false,
@@ -73,15 +71,15 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
     if (!req.query) {
       return res.status(400).send({
         success: false,
-        message: 'No URL params (distance, coordinateX, coordinateY)'
+        message: 'No URL params'
       });
     }
 
-    const { distance, coordinateX, coordinateY } = {
+    const { distance, coordinateX, coordinateY }: DistanceData = {
       distance: parseInt(req.query.distance),
       coordinateX: parseInt(req.query.coordinateX),
       coordinateY: parseInt(req.query.coordinateY)
-    } as DistanceData;
+    };
     if (!isValidNumber(distance) || !isValidNumber(coordinateY) || !isValidNumber(coordinateX)) {
       return res.status(400).send({
         success: false,
@@ -92,7 +90,7 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
     if (distance < 0 || coordinateX < 0 || coordinateY < 0) {
       return res.status(400).send({
         success: false,
-        message: 'Negative values are\'t accepted'
+        message: "Negative values aren't accepted"
       });
     }
 
@@ -102,8 +100,7 @@ routes.get('/pointsOfInterest/byProximity', async (req, res) => {
       success: true,
       data: poisArray
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send({
       success: false,

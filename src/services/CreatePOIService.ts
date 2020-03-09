@@ -1,10 +1,10 @@
-import POIData from './structures/PointOfInterestData';
-
 import POI from '@schemas/PointOfInterest';
 
+import POIData from './structures/PointOfInterestData';
+
 class CreatePOIService {
-  async run(poiData: POIData): Promise<any> {
-    return await POI.create(poiData);
+  async run(poiData: POIData): Promise<POIData> {
+    return await POI.create(poiData) as POIData;
   }
 }
 

@@ -7,15 +7,15 @@ import POIData from './structures/PointOfInterestData';
 
 class ListPOIsByProximityService {
   async run(distanceData: DistanceData): Promise<POIData[]> {
-    const poisArray = await POI.find({}).select('-_id name coordinateX coordinateY').lean() as POIData[];
+    const poisArray: POIData[] = await POI.find({}).select('-_id name coordinateX coordinateY').lean();
 
     const informedPoint = {
       coordX: distanceData.coordinateX,
       coordY: distanceData.coordinateY
     };
 
-    const poisNearArray = [] as POIData[];
-    poisArray.map(poi => {
+    const poisNearArray = new Array<POIData>();
+    poisArray.forEach(poi => {
       const point = {
         coordX: poi.coordinateX,
         coordY: poi.coordinateY
