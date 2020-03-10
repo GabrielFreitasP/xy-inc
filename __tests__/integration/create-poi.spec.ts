@@ -1,6 +1,6 @@
 import MongoMock from '../utils/MongoMock';
 
-import CreatePOIService from '../../src/services/CreatePOIService';
+import POIsService from '../../src/services/PointsOfInterestService';
 
 import POI from '../../src/schemas/PointOfInterest';
 import POIData from '../../src/services/structures/PointOfInterestData';
@@ -25,7 +25,7 @@ describe('Create Point of Interest', () => {
       coordinateY: 12
     };
 
-    await CreatePOIService.run(poi);
+    await POIsService.create(poi);
 
     const poisArray = await POI.find({}).lean();
 
@@ -45,7 +45,7 @@ describe('Create Point of Interest', () => {
     };
 
     try {
-      await CreatePOIService.run(poi);
+      await POIsService.create(poi);
     } catch (err) {
       expect(err.name).toEqual('ValidationError');
       expect(err._message).toEqual('PointOfInterest validation failed');

@@ -1,6 +1,6 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListPOIsService from '../../src/services/ListPOIsService';
+import POIsService from '../../src/services/PointsOfInterestService';
 
 import POI from '../../src/schemas/PointOfInterest';
 
@@ -22,7 +22,7 @@ describe('List Points of Interest', () => {
   it('should be able list all points of interest', async () => {
     await POI.create(poisArrayMock);
 
-    const poisArray = await ListPOIsService.run();
+    const poisArray = await POIsService.listAll();
 
     expect(poisArray).toBeInstanceOf(Array);
     expect(poisArray.length).toBe(7);

@@ -1,6 +1,6 @@
 import MongoMock from '../utils/MongoMock';
 
-import ListPOIsByProximityService from '../../src/services/ListPOIsByProximityService';
+import POIsService from '../../src/services/PointsOfInterestService';
 
 import POI from '../../src/schemas/PointOfInterest';
 
@@ -23,7 +23,7 @@ describe('List Points of Interest by Proximity', () => {
     await POI.create(poisArrayMock);
 
     const poisArray =
-      await ListPOIsByProximityService.run({ distance: 10, coordinateX: 20, coordinateY: 10 });
+      await POIsService.listByProximity({ distance: 10, coordinateX: 20, coordinateY: 10 });
 
     expect(poisArray).toBeInstanceOf(Array);
     expect(poisArray.length).toBe(4);
