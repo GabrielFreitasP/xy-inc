@@ -6,7 +6,7 @@ import FakeUserData from '@services/structures/FakeUserData';
 
 class AuthController {
 
-  async generateToken(req: any, res: any) {
+  async getToken(req: any, res: any) {
     try {
       if (Object.keys(req.body).length === 0) {
         return res.status(400).send({
