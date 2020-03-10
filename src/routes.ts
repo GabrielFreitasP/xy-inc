@@ -6,7 +6,10 @@ import POIsController from '@controllers/PointsOfInterestController';
 
 const routes = Router();
 
-routes.get('/health', (req, res) => res.send({ success: true }));
+routes.get('/health', (_, res) => res.send({ 
+  success: true,
+  message: 'Server OK'
+}));
 
 routes.post('/token', AuthController.getToken);
 
