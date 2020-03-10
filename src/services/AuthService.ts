@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import FakeUserData from './structures/FakeUserData';
 
 class AuthService {
+
   getToken(user: FakeUserData): string {
     const params = { username: user.username };
 
