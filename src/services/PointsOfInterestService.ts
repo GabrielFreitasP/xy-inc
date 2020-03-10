@@ -6,6 +6,7 @@ import DistanceData from './structures/DistanceData';
 import POIData from './structures/PointOfInterestData';
 
 class PointsOfInterestService {
+
   async create(poiData: POIData): Promise<POIData> {
     return await POI.create(poiData) as POIData;
   }
