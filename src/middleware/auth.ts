@@ -1,6 +1,6 @@
 import AuthService from '@services/AuthService';
 
-const authMiddleware = async (req: any, res: any, next: any) => {
+export default async (req: any, res: any, next: any) => {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {
@@ -13,10 +13,10 @@ const authMiddleware = async (req: any, res: any, next: any) => {
 	//Bearer {hash}
 	const parts: string[] = authHeader.split(' ');
 
-	if (!(parts.length === 2)) {
+	if (parts.length !== 2) {
 		return res.status(401).send({
 			success: false,
-			message: 'Token error'
+			message: 'Token malformatted'
 		});
 	}
 
@@ -39,5 +39,3 @@ const authMiddleware = async (req: any, res: any, next: any) => {
 		});
 	}
 };
-
-export default authMiddleware;

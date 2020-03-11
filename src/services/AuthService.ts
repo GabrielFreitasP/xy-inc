@@ -1,5 +1,6 @@
-import authConfig from '@config/auth';
 import jwt from 'jsonwebtoken';
+
+import authConfig from '@config/auth';
 
 import FakeUserData from './structures/FakeUserData';
 
@@ -15,17 +16,16 @@ class AuthService {
     });
   }
 
-  verifyToken(token: string): Promise<boolean> {
+  verifyToken(token: string): Promise<string> {
     const secret = authConfig.secret as string;
 
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       jwt.verify(token, secret, (err: any, decoded: any) => {
         if (err) reject(err);
 
         resolve(decoded.username);
       });
     });
-
   }
 }
 
