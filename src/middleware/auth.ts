@@ -33,9 +33,18 @@ export default async (req: any, res: any, next: any) => {
 		req.username = await AuthService.verifyToken(token);
 		next();
 	} catch (err) {
-		return res.status(401).send({
+		console.log(err)
+		
+		if (err.name === 'TokenExpiredError' && err.message === 'jwt expired') {
+			return res.status(401).send({
+				success: false,
+				message: 'Token expired'
+			});
+		}
+
+		return res.status(500).send({
 			success: false,
-			message: 'Token invalid'
+			message: 'Internal server error'
 		});
 	}
 };
