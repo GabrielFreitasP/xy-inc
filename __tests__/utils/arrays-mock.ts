@@ -1,6 +1,6 @@
 import POIData from '../../src/services/structures/PointOfInterestData';
 
-export const poisArrayMock: POIData[] = [
+const poisArrayMock: POIData[] = [
   {
     "name": "Lanchonete",
     "coordinateX": 27,
@@ -37,3 +37,5 @@ export const poisArrayMock: POIData[] = [
     "coordinateY": 2
   }
 ];
+
+export default poisArrayMock;

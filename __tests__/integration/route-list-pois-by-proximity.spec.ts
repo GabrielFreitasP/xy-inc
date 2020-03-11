@@ -1,14 +1,18 @@
-import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
+
+import MongoMock from '../utils/MongoMock';
+import getTokenMock from '../utils/auth-mock';
+import poisArrayMock from '../utils/arrays-mock';
 import app from '../../src/app';
 
 import POI from '../../src/schemas/PointOfInterest';
 
-import { poisArrayMock } from '../utils/arrays-mock';
-
 describe('Route to List Points of Interest by Proximity', () => {
+  let tokenMock: string
+
   beforeAll(async () => {
     await MongoMock.connect();
+    tokenMock = getTokenMock()
   });
 
   afterAll(async () => {
@@ -23,7 +27,8 @@ describe('Route to List Points of Interest by Proximity', () => {
     await POI.create(poisArrayMock);
 
     const response = await request(app)
-      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=20&coordinateY=10');
+      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=20&coordinateY=10')
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -41,8 +46,8 @@ describe('Route to List Points of Interest by Proximity', () => {
 
   it('should return status 400 without query', async () => {
     const response = await request(app)
-      .get('/pointsOfInterest/byProximity')
-      .send();
+      .get('/pointsOfInterest/byProximity')      
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -51,7 +56,8 @@ describe('Route to List Points of Interest by Proximity', () => {
 
   it('should return status 400 missing field on query', async () => {
     const response = await request(app)
-      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=20');
+      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=20')
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -60,7 +66,8 @@ describe('Route to List Points of Interest by Proximity', () => {
 
   it('should return status 400 invalid field on query', async () => {
     const response = await request(app)
-      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=text&coordinateY=10');
+      .get('/pointsOfInterest/byProximity?distance=10&coordinateX=text&coordinateY=10')
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -69,10 +76,40 @@ describe('Route to List Points of Interest by Proximity', () => {
 
   it('should return status 400 with negative value on query', async () => {
     const response = await request(app)
-      .get('/pointsOfInterest/byProximity?distance=-10&coordinateX=20&coordinateY=10');
+      .get('/pointsOfInterest/byProximity?distance=-10&coordinateX=20&coordinateY=10')
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toEqual("Negative values aren't accepted");
+  });
+
+  it('should return status 401 without authorization token', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest/byProximity');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('No token provided');
+  });
+
+  it('should return status 401 with authorization token malformatted', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest/byProximity')
+      .set('Authorization', tokenMock);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token malformatted');
+  });
+
+  it('should return status 401 with invalid authorization token', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest/byProximity')
+      .set('Authorization', 'Bearer test');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token invalid');
   });
 });

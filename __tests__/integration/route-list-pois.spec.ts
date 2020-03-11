@@ -1,14 +1,18 @@
-import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
+
+import MongoMock from '../utils/MongoMock';
+import getTokenMock from '../utils/auth-mock';
+import poisArrayMock from '../utils/arrays-mock';
 import app from '../../src/app';
 
 import POI from '../../src/schemas/PointOfInterest';
 
-import { poisArrayMock } from '../utils/arrays-mock';
-
 describe('Route to List Points of Interest', () => {
+  let tokenMock: string
+
   beforeAll(async () => {
     await MongoMock.connect();
+    tokenMock = getTokenMock()
   });
 
   afterAll(async () => {
@@ -22,7 +26,9 @@ describe('Route to List Points of Interest', () => {
   it('should return status 200', async () => {
     await POI.create(poisArrayMock);
 
-    const response = await request(app).get('/pointsOfInterest');
+    const response = await request(app)
+      .get('/pointsOfInterest')
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -39,5 +45,34 @@ describe('Route to List Points of Interest', () => {
         expect.objectContaining(poisArrayMock[6])
       ])
     );
+  });
+
+  it('should return status 401 without authorization token', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('No token provided');
+  });
+
+  it('should return status 401 with authorization token malformatted', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest')
+      .set('Authorization', tokenMock);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token malformatted');
+  });
+
+  it('should return status 401 with invalid authorization token', async () => {
+    const response = await request(app)
+      .get('/pointsOfInterest')
+      .set('Authorization', 'Bearer test');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token invalid');
   });
 });

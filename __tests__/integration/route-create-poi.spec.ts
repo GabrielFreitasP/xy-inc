@@ -1,12 +1,17 @@
-import MongoMock from '../utils/MongoMock';
 import request from 'supertest';
+
+import MongoMock from '../utils/MongoMock';
+import getTokenMock from '../utils/auth-mock';
 import app from '../../src/app';
 
 import POI from '../../src/schemas/PointOfInterest';
 
 describe('Route to Create Point of Interest', () => {
+  let tokenMock: string
+
   beforeAll(async () => {
     await MongoMock.connect();
+    tokenMock = getTokenMock()
   });
 
   afterAll(async () => {
@@ -26,7 +31,8 @@ describe('Route to Create Point of Interest', () => {
 
     const response = await request(app)
       .post('/pointsOfInterest')
-      .send(poi);
+      .send(poi)
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
@@ -38,7 +44,7 @@ describe('Route to Create Point of Interest', () => {
   it('should return status 400 without body', async () => {
     const response = await request(app)
       .post('/pointsOfInterest')
-      .send();
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -53,7 +59,8 @@ describe('Route to Create Point of Interest', () => {
 
     const response = await request(app)
       .post('/pointsOfInterest')
-      .send(poi);
+      .send(poi)
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -69,7 +76,8 @@ describe('Route to Create Point of Interest', () => {
 
     const response = await request(app)
       .post('/pointsOfInterest')
-      .send(poi);
+      .send(poi)
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
@@ -85,10 +93,40 @@ describe('Route to Create Point of Interest', () => {
 
     const response = await request(app)
       .post('/pointsOfInterest')
-      .send(poi);
+      .send(poi)
+      .set('Authorization', `Bearer ${tokenMock}`);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toEqual("Negative values aren't accepted");
+  });
+
+  it('should return status 401 without authorization token', async () => {
+    const response = await request(app)
+      .post('/pointsOfInterest');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('No token provided');
+  });
+
+  it('should return status 401 with authorization token malformatted', async () => {
+    const response = await request(app)
+      .post('/pointsOfInterest')
+      .set('Authorization', tokenMock);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token malformatted');
+  });
+
+  it('should return status 401 with invalid authorization token', async () => {
+    const response = await request(app)
+      .post('/pointsOfInterest')
+      .set('Authorization', 'Bearer test');
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toEqual('Token invalid');
   });
 });
