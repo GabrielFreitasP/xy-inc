@@ -15,7 +15,7 @@ class PointsOfInterestController {
           message: 'No body content'
         });
       }
-      
+
       const { name, coordinateX, coordinateY }: POIData = req.body;
       if (!isValidString(name) || !isValidNumber(coordinateX) || !isValidNumber(coordinateY)) {
         return res.status(400).send({
@@ -23,19 +23,24 @@ class PointsOfInterestController {
           message: 'Invalid body content'
         });
       }
-      
+
       if (coordinateX < 0 || coordinateY < 0) {
         return res.status(400).send({
           success: false,
           message: "Negative values aren't accepted"
         });
       }
-      
-      const poi: POIData = await POIsService.create({ name, coordinateX, coordinateY });
-      
+
+      const poi = await POIsService.create({ name, coordinateX, coordinateY });
+
       return res.status(201).send({
         success: true,
-        data: poi
+        data: {
+          id: poi._id,
+          name: poi.name,
+          coordinateX: poi.coordinateX,
+          coordinateY: poi.coordinateY
+        }
       });
     } catch (err) {
       console.error(err);
@@ -45,11 +50,11 @@ class PointsOfInterestController {
       });
     }
   }
-  
-  async listAll(req: any, res: any) {
+
+  async listAll(_: any, res: any) {
     try {
-      const poisArray: POIData[] = await POIsService.listAll();
-  
+      const poisArray = await POIsService.listAll();
+
       return res.status(200).send({
         success: true,
         data: poisArray
@@ -62,7 +67,7 @@ class PointsOfInterestController {
       });
     }
   }
-  
+
   async listByProximity(req: any, res: any) {
     try {
       if (Object.keys(req.query).length === 0) {
@@ -83,16 +88,16 @@ class PointsOfInterestController {
           message: 'Invalid query content'
         });
       }
-      
+
       if (distance < 0 || coordinateX < 0 || coordinateY < 0) {
         return res.status(400).send({
           success: false,
           message: "Negative values aren't accepted"
         });
       }
-      
-      const poisArray: POIData[] = await POIsService.listByProximity({ distance, coordinateX, coordinateY });
-      
+
+      const poisArray = await POIsService.listByProximity({ distance, coordinateX, coordinateY });
+
       return res.status(200).send({
         success: true,
         data: poisArray
