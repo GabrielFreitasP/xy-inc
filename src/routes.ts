@@ -6,7 +6,7 @@ import POIsController from '@controllers/PointsOfInterestController';
 
 const routes = Router();
 
-routes.get('/health', (_, res) => res.send({ 
+routes.get('/ping', (_, res) => res.send({ 
   success: true,
   message: 'Server OK'
 }));
