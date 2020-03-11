@@ -56,14 +56,14 @@ describe('Route to List Points of Interest', () => {
     expect(response.body.message).toEqual('No token provided');
   });
 
-  it('should return status 401 on getting all POIs with authorization token malformatted', async () => {
+  it('should return status 401 on getting all POIs with a malformed authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest')
       .set('Authorization', tokenMock);
 
     expect(response.status).toBe(401);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toEqual('Token malformatted');
+    expect(response.body.message).toEqual('Token malformed');
   });
 
   it('should return status 401 on getting all POIs with invalid authorization token', async () => {
@@ -73,6 +73,6 @@ describe('Route to List Points of Interest', () => {
 
     expect(response.status).toBe(401);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toEqual('Token invalid');
+    expect(response.body.message).toEqual('Token malformed');
   });
 });

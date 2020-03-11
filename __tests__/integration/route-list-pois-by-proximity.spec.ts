@@ -93,14 +93,14 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('No token provided');
   });
 
-  it('should return status 401 on getting proximity POIs with a malformatted authorization token', async () => {
+  it('should return status 401 on getting proximity POIs with a malformed authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity')
       .set('Authorization', tokenMock);
 
     expect(response.status).toBe(401);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toEqual('Token malformatted');
+    expect(response.body.message).toEqual('Token malformed');
   });
 
   it('should return status 401 on getting proximity POIs with an invalid authorization token', async () => {
@@ -110,6 +110,6 @@ describe('Route to List Points of Interest by Proximity', () => {
 
     expect(response.status).toBe(401);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toEqual('Token invalid');
+    expect(response.body.message).toEqual('Token malformed');
   });
 });
