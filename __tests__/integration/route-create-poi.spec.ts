@@ -22,7 +22,7 @@ describe('Route to Create Point of Interest', () => {
     await POI.deleteMany({});
   });
 
-  it('should return status 201 with correct params', async () => {
+  it('should return status 201 on posting a valid body and a valid authorization token', async () => {
     const poi = {
       name: 'Lanchonete',
       coordinateX: 27,
@@ -41,7 +41,7 @@ describe('Route to Create Point of Interest', () => {
     );
   });
 
-  it('should return status 400 without body', async () => {
+  it('should return status 400 on posting any body', async () => {
     const response = await request(app)
       .post('/pointsOfInterest')
       .set('Authorization', `Bearer ${tokenMock}`);
@@ -51,7 +51,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual('No body content');
   });
 
-  it('should return status 400 missing field on body', async () => {
+  it('should return status 400 on posting a body missing field', async () => {
     const poi = {
       name: 'Lanchonete',
       coordinateX: 27
@@ -67,7 +67,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual('Invalid body content');
   });
 
-  it('should return status 400 with params with object', async () => {
+  it('should return status 400 on posting an invalid type on body', async () => {
     const poi = {
       name: { value: 'Lanchonete' },
       coordinateX: 27,
@@ -84,7 +84,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual("Invalid body content");
   });
 
-  it('should return status 400 with params with negative values', async () => {
+  it('should return status 400 on posting a negative value on body', async () => {
     const poi = {
       name: 'Lanchonete',
       coordinateX: 27,
@@ -101,7 +101,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual("Negative values aren't accepted");
   });
 
-  it('should return status 401 without authorization token', async () => {
+  it('should return status 401 on posting any authorization token', async () => {
     const response = await request(app)
       .post('/pointsOfInterest');
 
@@ -110,7 +110,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual('No token provided');
   });
 
-  it('should return status 401 with authorization token malformatted', async () => {
+  it('should return status 401 on setting a malformatted authorization token', async () => {
     const response = await request(app)
       .post('/pointsOfInterest')
       .set('Authorization', tokenMock);
@@ -120,7 +120,7 @@ describe('Route to Create Point of Interest', () => {
     expect(response.body.message).toEqual('Token malformatted');
   });
 
-  it('should return status 401 with invalid authorization token', async () => {
+  it('should return status 401 on setting an invalid authorization token', async () => {
     const response = await request(app)
       .post('/pointsOfInterest')
       .set('Authorization', 'Bearer test');

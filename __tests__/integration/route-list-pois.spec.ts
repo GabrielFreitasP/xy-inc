@@ -23,7 +23,7 @@ describe('Route to List Points of Interest', () => {
     await POI.deleteMany({});
   });
 
-  it('should return status 200', async () => {
+  it('should return status 200 on getting all POIs with a valid authorization token', async () => {
     await POI.create(poisArrayMock);
 
     const response = await request(app)
@@ -47,7 +47,7 @@ describe('Route to List Points of Interest', () => {
     );
   });
 
-  it('should return status 401 without authorization token', async () => {
+  it('should return status 401 on getting all POIs without authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest');
 
@@ -56,7 +56,7 @@ describe('Route to List Points of Interest', () => {
     expect(response.body.message).toEqual('No token provided');
   });
 
-  it('should return status 401 with authorization token malformatted', async () => {
+  it('should return status 401 on getting all POIs with authorization token malformatted', async () => {
     const response = await request(app)
       .get('/pointsOfInterest')
       .set('Authorization', tokenMock);
@@ -66,7 +66,7 @@ describe('Route to List Points of Interest', () => {
     expect(response.body.message).toEqual('Token malformatted');
   });
 
-  it('should return status 401 with invalid authorization token', async () => {
+  it('should return status 401 on getting all POIs with invalid authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest')
       .set('Authorization', 'Bearer test');

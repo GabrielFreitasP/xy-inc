@@ -23,7 +23,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     await POI.deleteMany({});
   });
 
-  it('should return status 200 with correct query', async () => {
+  it('should return status 200 on getting proximity POIs with a valid query and a valid authorization token', async () => {
     await POI.create(poisArrayMock);
 
     const response = await request(app)
@@ -44,7 +44,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     );
   });
 
-  it('should return status 400 without query', async () => {
+  it('should return status 400 on getting proximity POIs with any query', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity')      
       .set('Authorization', `Bearer ${tokenMock}`);
@@ -54,7 +54,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('No query content');
   });
 
-  it('should return status 400 missing field on query', async () => {
+  it('should return status 400 on getting proximity POIs with a missing field on query', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity?distance=10&coordinateX=20')
       .set('Authorization', `Bearer ${tokenMock}`);
@@ -64,7 +64,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('Invalid query content');
   });
 
-  it('should return status 400 invalid field on query', async () => {
+  it('should return status 400 on getting proximity POIs with an invalid field on query', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity?distance=10&coordinateX=text&coordinateY=10')
       .set('Authorization', `Bearer ${tokenMock}`);
@@ -74,7 +74,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('Invalid query content');
   });
 
-  it('should return status 400 with negative value on query', async () => {
+  it('should return status 400 on getting proximity POIs with a negative value on query', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity?distance=-10&coordinateX=20&coordinateY=10')
       .set('Authorization', `Bearer ${tokenMock}`);
@@ -84,7 +84,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual("Negative values aren't accepted");
   });
 
-  it('should return status 401 without authorization token', async () => {
+  it('should return status 401 on getting proximity POIs without authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity');
 
@@ -93,7 +93,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('No token provided');
   });
 
-  it('should return status 401 with authorization token malformatted', async () => {
+  it('should return status 401 on getting proximity POIs with a malformatted authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity')
       .set('Authorization', tokenMock);
@@ -103,7 +103,7 @@ describe('Route to List Points of Interest by Proximity', () => {
     expect(response.body.message).toEqual('Token malformatted');
   });
 
-  it('should return status 401 with invalid authorization token', async () => {
+  it('should return status 401 on getting proximity POIs with an invalid authorization token', async () => {
     const response = await request(app)
       .get('/pointsOfInterest/byProximity')
       .set('Authorization', 'Bearer test');
