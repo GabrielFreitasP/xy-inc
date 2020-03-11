@@ -1,4 +1,5 @@
 export default {
+    local: process.env.MONGO_LOCAL || true,
     host: process.env.MONGO_URL || 'localhost',
     port: process.env.MONGO_PORT || 27017,
     username: process.env.MONGO_USER,
