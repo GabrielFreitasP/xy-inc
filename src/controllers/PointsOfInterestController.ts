@@ -36,7 +36,7 @@ class PointsOfInterestController {
       return res.status(201).send({
         success: true,
         data: {
-          id: poi._id,
+          _id: poi._id,
           name: poi.name,
           coordinateX: poi.coordinateX,
           coordinateY: poi.coordinateY
