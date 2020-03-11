@@ -12,11 +12,11 @@ class PointsOfInterestService {
   }
 
   async listAll(): Promise<POIData[]> {
-    return await POI.find({}).select('_id name coordinateX coordinateY').lean();
+    return await POI.find({}).select('_id as id name coordinateX coordinateY').lean();
   }
 
   async listByProximity(distanceData: DistanceData): Promise<POIData[]> {
-    const poisArray: POIData[] = await POI.find({}).select('_id name coordinateX coordinateY').lean();
+    const poisArray: POIData[] = await POI.find({}).select('_id as id name coordinateX coordinateY').lean();
 
     const informedPoint = {
       coordX: distanceData.coordinateX,
