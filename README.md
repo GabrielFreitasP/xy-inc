@@ -1,6 +1,6 @@
 # XY Inc API
 
-A Points Of Interest API
+A Points Of Interest API.
 
 This API aims to create points of interest and list them by proximity.
 
@@ -49,3 +49,9 @@ _NOTE:_ The variable `MONGO_PORT` isn't used when `MONGO_LOCAL` has value `false
 **Running the tests**
 
     $ yarn test
+
+## Using
+
+**Documentation**
+
+For more information, check the API documentation [here](https://app.swaggerhub.com/apis-docs/GabrielFreitasP/XYInc/1.0.0-oas3).
