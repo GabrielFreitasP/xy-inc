@@ -54,7 +54,7 @@ _NOTE:_ The variable `MONGO_PORT` isn't used when `MONGO_LOCAL` has value `false
 
 **Live Demo**
 
-You can access live demo in http://xy-inc-g.herokuapp.com/
+You can access live demo in http://xy-inc-g.herokuapp.com/ping
 
 **Documentation**
 
