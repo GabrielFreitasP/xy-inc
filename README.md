@@ -52,6 +52,10 @@ _NOTE:_ The variable `MONGO_PORT` isn't used when `MONGO_LOCAL` has value `false
 
 ## Using
 
+**Live Demo**
+
+You can access live demo in http://xy-inc-g.herokuapp.com/
+
 **Documentation**
 
 For more information, check the API documentation [here](https://app.swaggerhub.com/apis-docs/GabrielFreitasP/XYInc/1.0.0-oas3).
