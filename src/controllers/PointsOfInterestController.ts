@@ -1,9 +1,9 @@
-import { isValidString, isValidNumber } from '@utils/validations';
+import { isValidString, isValidNumber } from '../utils/validations';
 
-import POIsService from '@services/PointsOfInterestService';
+import POIsService from '../services/PointsOfInterestService';
 
-import POIData from '@services/structures/PointOfInterestData';
-import DistanceData from '@services/structures/DistanceData';
+import POIData from '../services/structures/PointOfInterestData';
+import DistanceData from '../services/structures/DistanceData';
 
 class PointsOfInterestController {
 

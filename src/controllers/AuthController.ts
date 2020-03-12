@@ -1,8 +1,8 @@
-import { isValidString } from '@utils/validations';
+import { isValidString } from '../utils/validations';
 
-import AuthService from '@services/AuthService';
+import AuthService from '../services/AuthService';
 
-import FakeUserData from '@services/structures/FakeUserData';
+import FakeUserData from '../services/structures/FakeUserData';
 
 class AuthController {
 

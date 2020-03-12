@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import authMiddleware from '@middleware/auth';
+import authMiddleware from './middleware/auth';
 
-import AuthController from '@controllers/AuthController';
-import POIsController from '@controllers/PointsOfInterestController';
+import AuthController from './controllers/AuthController';
+import POIsController from './controllers/PointsOfInterestController';
 
 const routes = Router();
 

@@ -1,4 +1,4 @@
-import AuthService from '@services/AuthService';
+import AuthService from '../services/AuthService';
 
 export default async (req: any, res: any, next: any) => {
 	try {

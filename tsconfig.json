@@ -18,14 +18,14 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "paths": {
-      "@config/*": ["config/*"],
-      "@controllers/*": ["controllers/*"],
-      "@middleware/*": ["middleware/*"],
-      "@services/*": ["services/*"],
-      "@schemas/*": ["schemas/*"],
-      "@utils/*": ["utils/*"]
-    }
+    // "paths": {
+    //   "@config/*": ["config/*"],
+    //   "@controllers/*": ["controllers/*"],
+    //   "@middleware/*": ["middleware/*"],
+    //   "@services/*": ["services/*"],
+    //   "@schemas/*": ["schemas/*"],
+    //   "@utils/*": ["utils/*"]
+    // }
   },
   "include": ["src"],
   "exclude": ["node_modules", "__tests__"]
