@@ -1,6 +1,6 @@
 # XY Inc API
 
-A Points Of Interest API.
+A Points Of Interest API
 
 This API aims to create points of interest and list them by proximity.
 

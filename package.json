@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {    
-    "build-ts": "tsc",
-    "postinstall": "yarn build-ts",
-    "start": "node dist/server.js",
+  "scripts": {
     "dev": "nodemon src/server.ts --ignore __tests__",
     "test": "jest --detectOpenHandles"
   },

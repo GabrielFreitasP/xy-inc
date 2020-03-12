@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import mongoConfig from './config/mongo';
+import mongoConfig from '@config/mongo';
 import mongoose from 'mongoose';
 import app from './app';
 

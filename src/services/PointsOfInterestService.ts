@@ -1,6 +1,6 @@
-import calculateDistance from '../utils/calculate-distance';
+import calculateDistance from '@utils/calculate-distance';
 
-import POI from '../schemas/PointOfInterest';
+import POI from '@schemas/PointOfInterest';
 
 import DistanceData from './structures/DistanceData';
 import POIData from './structures/PointOfInterestData';
